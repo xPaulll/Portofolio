@@ -207,7 +207,7 @@
 </div>
 
 {{-- Bottom CTA --}}
-<div class="t-panel p-5 flex items-center justify-between fade-in-up fade-in-up-delay-4">
+<div class="t-panel p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 fade-in-up fade-in-up-delay-4">
     <div>
         <p class="font-mono font-bold text-sm tracking-widest uppercase mb-1" style="color:#c0c0c0;">
             &gt; READY_TO_COLLABORATE.exe
@@ -216,7 +216,7 @@
             Terbuka untuk project freelance dan konsultasi otomasi industri.
         </p>
     </div>
-    <a href="{{ route('contact') }}" class="btn-neon flex-shrink-0">
+    <a href="{{ route('contact') }}" class="btn-neon flex-shrink-0 w-full sm:w-auto text-center justify-center">
         INIT_HANDSHAKE
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
