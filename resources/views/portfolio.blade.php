@@ -735,5 +735,73 @@
         </div>
     </nav>
 
+    {{-- Anti-Theft Security Script --}}
+    <script>
+        (function() {
+            // 1. Matikan klik kanan (Context menu)
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                showSecurityWarning('SEC_VIOLATION // UNAUTHORIZED_ACCESS_ATTEMPT');
+            });
+
+            // 2. Cegah drag and drop pada semua gambar
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.nodeName.toUpperCase() === 'IMG') {
+                    e.preventDefault();
+                }
+            });
+
+            // 3. Batasi tombol shortcut developer (F12, Ctrl+U, Ctrl+Shift+I, dll)
+            document.addEventListener('keydown', function(e) {
+                // F12
+                if (e.key === 'F12' || e.keyCode === 123) {
+                    e.preventDefault();
+                    showSecurityWarning('SEC_VIOLATION // DEV_TOOLS_BLOCKED');
+                }
+                // Ctrl+Shift+I / J / C (Inspect)
+                if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) {
+                    e.preventDefault();
+                    showSecurityWarning('SEC_VIOLATION // INSPECT_BLOCKED');
+                }
+                // Ctrl+U / Ctrl+S / Ctrl+P (View Source, Save, Print)
+                if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's' || e.key === 'P' || e.key === 'p')) {
+                    e.preventDefault();
+                    showSecurityWarning('SEC_VIOLATION // COMMAND_BLOCKED');
+                }
+            });
+
+            // Fungsi untuk menampilkan pesan peringatan ala Cyberpunk
+            function showSecurityWarning(msg) {
+                // Hapus warning lama jika ada
+                const oldWarn = document.getElementById('sec-warning');
+                if (oldWarn) oldWarn.remove();
+
+                const warning = document.createElement('div');
+                warning.id = 'sec-warning';
+                warning.style.position = 'fixed';
+                warning.style.top = '20px';
+                warning.style.left = '50%';
+                warning.style.transform = 'translateX(-50%)';
+                warning.style.backgroundColor = 'rgba(255, 0, 0, 0.15)';
+                warning.style.border = '1px solid #ff0000';
+                warning.style.color = '#ff3333';
+                warning.style.padding = '8px 16px';
+                warning.style.fontFamily = '"JetBrains Mono", monospace';
+                warning.style.fontSize = '10px';
+                warning.style.letterSpacing = '0.1em';
+                warning.style.zIndex = '999999';
+                warning.style.boxShadow = '0 0 10px rgba(255,0,0,0.5)';
+                warning.innerHTML = `> <span>${msg}</span> <span style="animation: blink 1s step-end infinite">█</span>`;
+                
+                document.body.appendChild(warning);
+
+                // Hilangkan otomatis setelah 2 detik
+                setTimeout(() => {
+                    if (warning.parentNode) warning.parentNode.removeChild(warning);
+                }, 2000);
+            }
+        })();
+    </script>
+
 </body>
 </html>
